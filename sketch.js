@@ -45,7 +45,8 @@ function setup() {
   
   display_offset = 0;
   display_offset_at_press = 0;
-  display_offset_speed = -1.3 * (width/553); //pixels per frame
+  lastFrameRate = 70;
+  display_offset_speed = -1.3 * (width/553) * (70/lastFrameRate); //pixels per frame
   
   drag_zone_y = height * (1/4)
   drag_zone_y = 0; //Set to zero to disable ability to pan
@@ -58,6 +59,7 @@ function setup() {
   textImagePosition = width * 3.6;
   separation_distance = 0;
   p_separation_distance = 0;
+  
 }
 
 function draw() {
@@ -79,14 +81,15 @@ function draw() {
   image(textImage, textImagePosition, height/2, w, h)
   textImagePosition += display_offset_speed * 1.3;
   
-  
+  if(frameCount%10 == 0)lastFrameRate = frameRate();
+  display_offset_speed = -1.3 * (width/553) * (70/lastFrameRate); //pixels per frame
   
 }
 
 function updateGraphicsObjects(){
   if(!mousepos.pressed || user_dragging){
     separation_distance += scrollSpeed;
-    var acc = 0.03;
+    var acc = 0.03 * (width/553) * (70/lastFrameRate) ;
     if(separation_distance > 0)scrollSpeed -= acc;
     if(separation_distance < 0)scrollSpeed += acc;
     if(p_separation_distance !== 0 && Math.sign(separation_distance) !== Math.sign(p_separation_distance) ){
@@ -122,6 +125,7 @@ function updateGraphicsObjects(){
   if( abs(display_offset) > w){
     display_offset = width;
     textImagePosition = width * 4.6;
+    nativeLog("Back to beginning " + lastFrameRate)
   }
 }
 
