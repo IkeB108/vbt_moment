@@ -162,7 +162,6 @@ function mouseWindowHandler(event){
     //nativeLog("I'm in")
   }
   if(event.type == "mouseout"){
-    nativeLog("I'm out")
     //This event is triggered consistently when the mouse leaves the canvas.
     if(mousepos.pressed){
       mousepos.pressed = false;
