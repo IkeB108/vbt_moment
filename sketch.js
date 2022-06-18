@@ -125,7 +125,7 @@ function updateGraphicsObjects(){
   if( abs(display_offset) > w){
     display_offset = width;
     textImagePosition = width * 4.6;
-    nativeLog("Back to beginning " + lastFrameRate)
+    //nativeLog("Back to beginning " + lastFrameRate)
   }
 }
 
